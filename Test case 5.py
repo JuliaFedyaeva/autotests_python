@@ -2,18 +2,18 @@ from selenium import webdriver
 import time
 
 try:
-    # предусловия
+    #### предусловия
     browser = webdriver.Chrome()
     browser.get('http://selenium1py.pythonanywhere.com/ru')
 
     # открываем страницу с каталогом товаров
     catalogPage = browser.find_element_by_xpath('//a[contains(text(), "Все товары")]').click()
 
-    # проверяем, что открылась нужная страница
-    pageDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
-    assert 'Все товары' in pageDetector
+    # проверяем, что открылась страница каталога
+    pageCatalogDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
+    assert 'Все товары' in pageCatalogDetector
 
-    # шаги
+    #### шаги
     # находим ссылку добавления товара в корзину и кликаем на неё
     addToCart = browser.find_element_by_xpath('//button[contains(text(), "Добавить в корзину")]').click()
 
@@ -28,9 +28,8 @@ try:
 
     cart = browser.find_element_by_css_selector('h3 a').text
 
-    # проверка финального ОР
+    #### проверка финального ОР
     assert whatIsInCart == cart
-
 
 finally:
     time.sleep(5)

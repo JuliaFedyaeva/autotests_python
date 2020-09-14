@@ -3,7 +3,7 @@ import time
 from selenium.webdriver.support.ui import Select
 
 try:
-    # предусловия
+    #### предусловия
     browser = webdriver.Chrome()
     browser.get('http://selenium1py.pythonanywhere.com/ru')
 
@@ -19,14 +19,12 @@ try:
     registrationButton = browser.find_element_by_id('login_link').click()
 
     # проверяем, что открылась нужная страница
-    pageDetector = browser.find_element_by_css_selector('form#login_form h2').text
-    assert 'Войти' in pageDetector
+    pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
+    assert 'Войти' in pageAuthDetector
 
-    # заполняем форму
+    # заполняем форму авторизации
     emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
-
     passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
-
     buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
 
     # проверка аторизации
@@ -37,9 +35,9 @@ try:
     # открываем страницу с каталогом товаров
     catalogPage = browser.find_element_by_xpath('//a[contains(text(), "Все товары")]').click()
 
-    # проверяем, что открылась нужная страница
-    pageDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
-    assert 'Все товары' in pageDetector
+    # проверяем, что открылась страница каталога
+    pageCatalogDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
+    assert 'Все товары' in pageCatalogDetector
 
     # находим ссылку добавления товара в корзину и кликаем на неё
     addToCart = browser.find_element_by_xpath('//button[contains(text(), "Добавить в корзину")]').click()
@@ -58,7 +56,7 @@ try:
     # проверка корзины
     assert whatIsInCart == cart
 
-    # шаги
+    #### шаги
     # переходим к оформлению заказа
     checkout = browser.find_element_by_xpath('//a[contains(text(), "Перейти к оформлению")]').click()
 
@@ -87,7 +85,7 @@ try:
 
     #здесь поля оплаты остаются пустыми
 
-    # проверяем ОР
+    #### проверяем ОР
     # проверяем, что кнопка не активна
     buttonDisabled = buttonToContinue.getAttribute('disabled')
     assert buttonDisabled == "true"
