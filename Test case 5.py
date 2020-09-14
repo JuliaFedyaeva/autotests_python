@@ -23,7 +23,7 @@ try:
 
     whatIsInCart = browser.find_element_by_css_selector('div.alertinner strong').text
 
-    # посмотрим что в корзине
+    # посмотрим, что в корзине
     cartLink = browser.find_element_by_css_selector('a[href="/ru/basket/"]').click()
 
     cart = browser.find_element_by_css_selector('h3 a').text
