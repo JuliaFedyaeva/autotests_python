@@ -26,9 +26,9 @@ try:
     buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
 
     # проверка финального ОР
-    sucsessMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
+    successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
 
-    assert 'Рады видеть вас снова' in sucsessMessage
+    assert 'Рады видеть вас снова' in successMessage
 
 
 finally:

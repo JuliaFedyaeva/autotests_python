@@ -28,9 +28,9 @@ try:
     buttonRegistration = browser.find_element_by_css_selector('button[value="Register"]').click()
 
     # проверка финального ОР
-    sucsessMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
+    successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
 
-    assert "Спасибо за регистрацию!" in sucsessMessage
+    assert "Спасибо за регистрацию!" in successMessage
 
 
 finally:
