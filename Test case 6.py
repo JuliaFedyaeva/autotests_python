@@ -1,98 +1,98 @@
 from selenium import webdriver
-import time
 from selenium.webdriver.support.ui import Select
 
-try:
-    #### предусловия
-    browser = webdriver.Chrome()
-    browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    name = "Max"
-    lastname = "Payne"
-    email = 'me@mail.ru'
-    password = 'nekakuvseh123'
-    address = 'PlayStation'
-    city = 'Nowhere'
-    postcode = '652877'
+def payment_without_card():
+    try:
+        #### предусловия
+        browser = webdriver.Chrome()
+        browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    # авторизуемся
-    registrationButton = browser.find_element_by_id('login_link').click()
+        name = "Max"
+        lastname = "Payne"
+        email = 'me@mail.ru'
+        password = 'nekakuvseh123'
+        address = 'PlayStation'
+        city = 'Nowhere'
+        postcode = '652877'
 
-    # проверяем, что открылась нужная страница
-    pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
-    assert 'Войти' in pageAuthDetector
+        # авторизуемся
+        browser.find_element_by_id('login_link').click()
 
-    # заполняем форму авторизации
-    emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
-    passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
-    buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
+        # проверяем, что открылась нужная страница
+        page_auth_detector = browser.find_element_by_css_selector('form#login_form h2').text
+        assert 'Войти' in page_auth_detector
 
-    # проверка аторизации
-    successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
+        # заполняем форму авторизации
+        emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
+        passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
+        buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
 
-    assert 'Рады видеть вас снова' in successMessage
+        # проверка аторизации
+        successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
 
-    # открываем страницу с каталогом товаров
-    catalogPage = browser.find_element_by_xpath('//a[contains(text(), "Все товары")]').click()
+        assert 'Рады видеть вас снова' in successMessage
 
-    # проверяем, что открылась страница каталога
-    pageCatalogDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
-    assert 'Все товары' in pageCatalogDetector
+        # открываем страницу с каталогом товаров
+        catalogPage = browser.find_element_by_xpath('//a[contains(text(), "Все товары")]').click()
 
-    # находим ссылку добавления товара в корзину и кликаем на неё
-    addToCart = browser.find_element_by_xpath('//button[contains(text(), "Добавить в корзину")]').click()
+        # проверяем, что открылась страница каталога
+        pageCatalogDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
+        assert 'Все товары' in pageCatalogDetector
 
-    # проверяем сообщение об отправке
-    addToCartMessage = browser.find_element_by_css_selector('div.alertinner').text
-    assert 'был добавлен в вашу корзину' in addToCartMessage
+        # находим ссылку добавления товара в корзину и кликаем на неё
+        addToCart = browser.find_element_by_xpath('//button[contains(text(), "Добавить в корзину")]').click()
 
-    whatIsInCart = browser.find_element_by_css_selector('div.alertinner strong').text
+        # проверяем сообщение об отправке
+        addToCartMessage = browser.find_element_by_css_selector('div.alertinner').text
+        assert 'был добавлен в вашу корзину' in addToCartMessage
 
-    # посмотрим, что в корзине
-    cartLink = browser.find_element_by_css_selector('a[href="/ru/basket/"]').click()
+        whatIsInCart = browser.find_element_by_css_selector('div.alertinner strong').text
 
-    cart = browser.find_element_by_css_selector('h3 a').text
+        # посмотрим, что в корзине
+        cartLink = browser.find_element_by_css_selector('a[href="/ru/basket/"]').click()
 
-    # проверка корзины
-    assert whatIsInCart == cart
+        cart = browser.find_element_by_css_selector('h3 a').text
 
-    #### шаги
-    # переходим к оформлению заказа
-    checkout = browser.find_element_by_xpath('//a[contains(text(), "Перейти к оформлению")]').click()
+        # проверка корзины
+        assert whatIsInCart == cart
 
-    # чекаем, где мы находимся
-    pageShippingAddressDetected = browser.find_element_by_css_selector('div.sub-header h1').text
-    assert "Адрес доставки" in pageShippingAddressDetected
+        #### шаги
+        # переходим к оформлению заказа
+        checkout = browser.find_element_by_xpath('//a[contains(text(), "Перейти к оформлению")]').click()
 
-    # заполняем поля доставки
-    inputName = browser.find_element_by_id('id_first_name').send_keys(name)
-    inputLastname = browser.find_element_by_id('id_last_name').send_keys(lastname)
-    inputAddress = browser.find_element_by_id('id_line1').send_keys(address)
-    inputCity = browser.find_element_by_id('id_line4').send_keys(city)
-    inputPostcode = browser.find_element_by_id('id_postcode').send_keys(postcode)
+        # чекаем, где мы находимся
+        pageShippingAddressDetected = browser.find_element_by_css_selector('div.sub-header h1').text
+        assert "Адрес доставки" in pageShippingAddressDetected
 
-    select = Select(browser.find_element_by_id('id_country'))
-    select.select_by_value('RU')
+        # заполняем поля доставки
+        inputName = browser.find_element_by_id('id_first_name').send_keys(name)
+        inputLastname = browser.find_element_by_id('id_last_name').send_keys(lastname)
+        inputAddress = browser.find_element_by_id('id_line1').send_keys(address)
+        inputCity = browser.find_element_by_id('id_line4').send_keys(city)
+        inputPostcode = browser.find_element_by_id('id_postcode').send_keys(postcode)
 
-    buttonToContinue = browser.find_element_by_xpath('//button[contains(text(), "Продолжить")]').click()
+        select = Select(browser.find_element_by_id('id_country'))
+        select.select_by_value('RU')
 
-    # тут по идее должна быть проверка способа доставки, но нет такого раздела почему-то,
-    # сразу перекидывает на шаг оплаты
+        buttonToContinue = browser.find_element_by_xpath('//button[contains(text(), "Продолжить")]').click()
 
-    # проверка невозможности продолжить оформление покупки без оплаты
-    pagePaymentDetector = browser.find_element_by_css_selector('div.sub-header h1').text
-    assert "Введите параметры платежа" in pagePaymentDetector
+        # тут по идее должна быть проверка способа доставки, но нет такого раздела почему-то,
+        # сразу перекидывает на шаг оплаты
 
-    #здесь поля оплаты остаются пустыми
+        # проверка невозможности продолжить оформление покупки без оплаты
+        pagePaymentDetector = browser.find_element_by_css_selector('div.sub-header h1').text
+        assert "Введите параметры платежа" in pagePaymentDetector
 
-    #### проверяем ОР
-    # проверяем, что кнопка не активна
-    buttonDisabled = buttonToContinue.getAttribute('disabled')
-    assert buttonDisabled == "true"
+        #здесь поля оплаты остаются пустыми
 
-    # пытаемся продолжить оформление заказа, надеюсь, безуспешно)
-    buttonToContinue.click()
+        #### проверяем ОР
+        # проверяем, что кнопка не активна
+        buttonDisabled = buttonToContinue.getAttribute('disabled')
+        assert buttonDisabled == "true"
 
-finally:
-    time.sleep(5)
-    browser.quit()
+        # пытаемся продолжить оформление заказа, надеюсь, безуспешно)
+        buttonToContinue.click()
+
+    finally:
+        browser.quit()

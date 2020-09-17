@@ -1,28 +1,28 @@
 from selenium import webdriver
-import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-try:
-    #### предусловие
-    browser = webdriver.Chrome()
-    browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    #### шаги
-    # ищем строку поиска и вводим название товара
-    search = browser.find_element_by_id('id_q').send_keys('Google Hacking')
-    searchButton = browser.find_element_by_css_selector('input[value = "Найти"]').click()
+def search_item():
+    try:
+        #### предусловие
+        browser = webdriver.Chrome()
+        browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    #### проверка ОР
-    # проверяем, что на странице появился искомый товар
-    waitLoading = WebDriverWait(browser, 5).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, 'a[title="Google Hacking"]'))
-    )
+        #### шаги
+        # ищем строку поиска и вводим название товара
+        search = browser.find_element_by_id('id_q').send_keys('Google Hacking')
+        searchButton = browser.find_element_by_css_selector('input[value = "Найти"]').click()
 
-    bookName = browser.find_element_by_css_selector('a[title="Google Hacking"]').text
-    assert 'Google Hacking' in bookName
+        #### проверка ОР
+        # проверяем, что на странице появился искомый товар
+        waitLoading = WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, 'a[title="Google Hacking"]'))
+        )
 
-finally:
-    time.sleep(5)
-    browser.quit()
+        bookName = browser.find_element_by_css_selector('a[title="Google Hacking"]').text
+        assert 'Google Hacking' in bookName
+
+    finally:
+        browser.quit()

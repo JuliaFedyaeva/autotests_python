@@ -1,38 +1,38 @@
 from selenium import webdriver
-import time
 
-try:
-    #### предусловия
-    browser = webdriver.Chrome()
-    browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    email = 'julia.fedyaeva@mail.ru'
+def password_remind():
+    try:
+        #### предусловия
+        browser = webdriver.Chrome()
+        browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    # открываем страницу с авторизацией
-    registrationButton = browser.find_element_by_id('login_link').click()
+        email = 'julia.fedyaeva@mail.ru'
 
-    # проверяем, что открылась нужная страница
-    pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
-    assert 'Войти' in pageAuthDetector
+        # открываем страницу с авторизацией
+        registrationButton = browser.find_element_by_id('login_link').click()
 
-    #### шаги
-    # находим ссылку восстановления пароля и кликаем на неё
-    remindPassword = browser.find_element_by_css_selector('a[href="/ru/password-reset/"]').click()
+        # проверяем, что открылась нужная страница
+        pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
+        assert 'Войти' in pageAuthDetector
 
-    # проверяем, что открылась нужная страница
-    passwordPageDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
-    assert 'Восстановление пароля' in passwordPageDetector
+        #### шаги
+        # находим ссылку восстановления пароля и кликаем на неё
+        remindPassword = browser.find_element_by_css_selector('a[href="/ru/password-reset/"]').click()
 
-    # заполняем форму
-    emailInput = browser.find_element_by_id('id_email').send_keys(email)
+        # проверяем, что открылась нужная страница
+        passwordPageDetector = browser.find_element_by_css_selector('div.page-header.action h1').text
+        assert 'Восстановление пароля' in passwordPageDetector
 
-    buttonAuthorisation = browser.find_element_by_xpath('//button[contains(text(), "Отправить письмо для смены пароля")]').click()
+        # заполняем форму
+        emailInput = browser.find_element_by_id('id_email').send_keys(email)
 
-    #### проверка финального ОР
-    successMessage = browser.find_element_by_css_selector('div.page-header.action h1').text
+        buttonAuthorisation = browser.find_element_by_xpath('//button[contains(text(), "Отправить письмо для смены пароля")]').click()
 
-    assert 'Письмо отправлено' in successMessage
+        #### проверка финального ОР
+        successMessage = browser.find_element_by_css_selector('div.page-header.action h1').text
 
-finally:
-    time.sleep(5)
-    browser.quit()
+        assert 'Письмо отправлено' in successMessage
+
+    finally:
+        browser.quit()

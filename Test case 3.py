@@ -1,33 +1,33 @@
 from selenium import webdriver
-import time
 
-try:
-    #### предусловия
-    browser = webdriver.Chrome()
-    browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    #  тут должны быть данные, которые есть в системе
-    email = 'me@mail.ru'
-    password = 'nekakuvseh123'
+def authorization():
+    try:
+        #### предусловия
+        browser = webdriver.Chrome()
+        browser.get('http://selenium1py.pythonanywhere.com/ru')
 
-    #### шаги
-    # открываем страницу с авторизацией
-    registrationButton = browser.find_element_by_id('login_link').click()
+        #  тут должны быть данные, которые есть в системе
+        email = 'me@mail.ru'
+        password = 'nekakuvseh123'
 
-    # проверяем, что открылась нужная страница
-    pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
-    assert 'Войти' in pageAuthDetector
+        #### шаги
+        # открываем страницу с авторизацией
+        registrationButton = browser.find_element_by_id('login_link').click()
 
-    # заполняем форму
-    emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
-    passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
-    buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
+        # проверяем, что открылась нужная страница
+        pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
+        assert 'Войти' in pageAuthDetector
 
-    #### проверка финального ОР
-    successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
+        # заполняем форму
+        emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
+        passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
+        buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
 
-    assert 'Рады видеть вас снова' in successMessage
+        #### проверка финального ОР
+        successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
 
-finally:
-    time.sleep(5)
-    browser.quit()
+        assert 'Рады видеть вас снова' in successMessage
+
+    finally:
+        browser.quit()
