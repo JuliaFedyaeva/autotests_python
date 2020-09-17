@@ -1,33 +1,34 @@
 from selenium import webdriver
+import locators as _locators
 
 
 def authorization():
+    # Data
+    auth_heading = 'Войти'
+    page_auth_locator = 'form#login_form h2'
+    success_message = 'Рады видеть вас снова'
+    success_message_locator = 'div.alertinner.wicon'
+
     try:
-        #### предусловия
+        # Arrange
         browser = webdriver.Chrome()
-        browser.get('http://selenium1py.pythonanywhere.com/ru')
+        browser.get(_locators.main_page_link)
 
-        #  тут должны быть данные, которые есть в системе
-        email = 'me@mail.ru'
-        password = 'nekakuvseh123'
+        browser.find_element_by_css_selector(_locators.login_link).click()
 
-        #### шаги
-        # открываем страницу с авторизацией
-        registrationButton = browser.find_element_by_id('login_link').click()
+        page_auth_detector = browser.find_element_by_css_selector(page_auth_locator).text
+        assert auth_heading in page_auth_detector, \
+            "Search heading '%s' should contain text '%s'" % (page_auth_detector, auth_heading)
 
-        # проверяем, что открылась нужная страница
-        pageAuthDetector = browser.find_element_by_css_selector('form#login_form h2').text
-        assert 'Войти' in pageAuthDetector
+        # Steps
+        browser.find_element_by_css_selector(_locators.input_email_auth).send_keys(_locators.email)
+        browser.find_element_by_css_selector(_locators.input_password_auth).send_keys(_locators.password)
+        browser.find_element_by_css_selector(_locators.button_auth).click()
 
-        # заполняем форму
-        emailInput = browser.find_element_by_id('id_login-username').send_keys(email)
-        passwordInput = browser.find_element_by_id('id_login-password').send_keys(password)
-        buttonAuthorisation = browser.find_element_by_css_selector('button[value="Log In"]').click()
-
-        #### проверка финального ОР
-        successMessage = browser.find_element_by_css_selector('div.alertinner.wicon').text
-
-        assert 'Рады видеть вас снова' in successMessage
+        # Assert
+        success_message_text = browser.find_element_by_css_selector(success_message_locator).text
+        assert success_message in success_message_text, \
+            "Search success message '%s' should contain text '%s'" % (success_message_text, success_message)
 
     finally:
         browser.quit()

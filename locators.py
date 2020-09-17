@@ -9,3 +9,7 @@ input_repeat_password = 'input#id_registration-password2'
 button_reg = 'button[value="Register"]'
 input_search = 'input#id_q'
 input_search_button = 'input[value = "Найти"]'
+input_email_auth = 'input#id_login-username'
+input_password_auth = 'input#id_login-password'
+button_auth = 'button[value="Log In"]'
+
