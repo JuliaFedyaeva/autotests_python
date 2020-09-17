@@ -2,27 +2,31 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import locators as _locators
 
 
 def search_item():
+    # Data
+    book_name = 'Google Hacking'
+    book_locator = 'a[title="Google Hacking"]'
+
     try:
-        #### предусловие
+        # Arrange
         browser = webdriver.Chrome()
-        browser.get('http://selenium1py.pythonanywhere.com/ru')
+        browser.get(_locators.main_page_link)
 
-        #### шаги
-        # ищем строку поиска и вводим название товара
-        search = browser.find_element_by_id('id_q').send_keys('Google Hacking')
-        searchButton = browser.find_element_by_css_selector('input[value = "Найти"]').click()
+        # Steps
+        browser.find_element_by_css_selector(_locators.input_search).send_keys(book_name)
+        browser.find_element_by_css_selector(_locators.input_search_button).click()
 
-        #### проверка ОР
-        # проверяем, что на странице появился искомый товар
-        waitLoading = WebDriverWait(browser, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'a[title="Google Hacking"]'))
+        WebDriverWait(browser, 5).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, book_locator))
         )
 
-        bookName = browser.find_element_by_css_selector('a[title="Google Hacking"]').text
-        assert 'Google Hacking' in bookName
+        # Assert
+        book_name_text = browser.find_element_by_css_selector(book_locator).text
+        assert book_name in book_name_text, \
+            "Search item '%s' should contain text '%s'" % (book_name_text, book_name)
 
     finally:
         browser.quit()
