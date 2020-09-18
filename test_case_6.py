@@ -7,17 +7,17 @@ import test_case_5
 
 def payment_without_card():
     # Data
-    name = "Max"
-    lastname = "Payne"
+    name = 'Max'
+    lastname = 'Payne'
     address = 'PlayStation'
     city = 'Nowhere'
     postcode = '652877'
-    page_shipping_heading = "Адрес доставки"
+    page_shipping_heading = 'Адрес доставки'
     heading_shipping_locator = 'div.sub-header h1'
     country_locator = 'select#id_country'
     russia = 'RU'
     heading_payment_locator = 'div.sub-header h1'
-    page_payment_heading = "Введите параметры платежа"
+    page_payment_heading = 'Введите параметры платежа'
 
     try:
         # Arrange
@@ -43,7 +43,7 @@ def payment_without_card():
         select = Select(browser.find_element_by_id(country_locator))
         select.select_by_value(russia)
 
-        button_to_next_step = browser.find_element_by_xpath(_locators.button_to_continue).click()
+        button_to_next_step = browser.find_element_by_css_selector(_locators.link_to_payment).click()
 
         # тут по идее должна быть проверка способа доставки, но нет такого раздела почему-то,
         # сразу перекидывает на шаг оплаты
@@ -55,7 +55,7 @@ def payment_without_card():
 
         # Assert
         button_disabled = button_to_next_step.getAttribute('disabled')
-        assert button_disabled == "true"
+        assert button_disabled == "true", "No disabled button on payment page"
 
         button_to_next_step.click()
 
