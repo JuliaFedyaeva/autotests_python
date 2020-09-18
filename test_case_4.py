@@ -13,13 +13,12 @@ def password_remind():
     success_message_locator = 'div.page-header.action h1'
     success_message = 'Письмо отправлено'
 
-
     try:
         # Arrange
         browser = webdriver.Chrome()
         browser.get(_locators.main_page_link)
 
-        browser.find_element_by_id(_locators.login_link).click()
+        browser.find_element_by_css_selector(_locators.login_link).click()
 
         page_auth_detector = browser.find_element_by_css_selector(page_auth_locator).text
         assert auth_heading in page_auth_detector, \
@@ -42,3 +41,6 @@ def password_remind():
 
     finally:
         browser.quit()
+
+
+password_remind()
