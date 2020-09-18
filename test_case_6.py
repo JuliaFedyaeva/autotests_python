@@ -28,7 +28,7 @@ def payment_without_card():
         test_case_5.add_product_to_cart()
 
         # Steps
-        browser.find_element_by_xpath(_locators.button_to_order).click()
+        browser.find_element_by_css_selector(_locators.button_to_order).click()
 
         page_shipping_detector = browser.find_element_by_css_selector(heading_shipping_locator).text
         assert page_shipping_heading in page_shipping_detector, \
@@ -61,3 +61,6 @@ def payment_without_card():
 
     finally:
         browser.quit()
+
+
+payment_without_card()

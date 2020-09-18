@@ -30,3 +30,6 @@ def search_item():
 
     finally:
         browser.quit()
+
+
+search_item()

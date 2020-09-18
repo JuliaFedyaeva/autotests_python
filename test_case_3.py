@@ -32,3 +32,6 @@ def authorization():
 
     finally:
         browser.quit()
+
+
+authorization()

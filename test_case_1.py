@@ -32,3 +32,6 @@ def registration():
 
     finally:
         browser.quit()
+
+
+registration()
