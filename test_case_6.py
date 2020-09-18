@@ -62,5 +62,4 @@ def payment_without_card():
     finally:
         browser.quit()
 
-
-payment_without_card()
+    return payment_without_card()

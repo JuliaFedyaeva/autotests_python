@@ -42,4 +42,4 @@ def add_product_to_cart():
         browser.quit()
 
 
-
+add_product_to_cart()
