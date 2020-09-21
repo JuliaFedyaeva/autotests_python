@@ -17,7 +17,7 @@ def search_item():
         browser.get(_locators.main_page_link)
 
         # Steps
-        utils.authorizaite(browser, test_data.book_name)
+        utils.search_item(browser, test_data.book_name)
 
         WebDriverWait(browser, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, book_locator))

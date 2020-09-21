@@ -9,7 +9,7 @@ def registrate(parent, new_email, password):
     parent.find_element_by_css_selector(_locators.input_repeat_password).send_keys(password)
     parent.find_element_by_css_selector(_locators.button_reg).click()
 
-def authorizaite(parent, book_name):
+def search_item(parent, book_name):
     parent.find_element_by_css_selector(_locators.input_search).send_keys(book_name)
     parent.find_element_by_css_selector(_locators.input_search_button).click()
 
