@@ -20,3 +20,7 @@ def authorizate(parent, email, password):
     parent.find_element_by_css_selector(_locators.input_email_auth).send_keys(email)
     parent.find_element_by_css_selector(_locators.input_password_auth).send_keys(password)
     parent.find_element_by_css_selector(_locators.button_auth).click()
+
+def reset_password(parent, email):
+    parent.find_element_by_css_selector(_locators.input_remind_password).send_keys(email)
+    parent.find_element_by_xpath(_locators.button_reset_password).click()
