@@ -32,7 +32,7 @@ def registration():
         )
 
         # Assert
-        success_message_text = browser.find_element_by_xpath(success_message_locator).text
+        success_message_text = utils.find_xpath(browser, success_message_locator).text
         assert success_message in success_message_text, \
             "Search success message on page '%s'should contain text '%s'" % (success_message_text, success_message)
 
