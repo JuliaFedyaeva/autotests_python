@@ -24,3 +24,9 @@ def authorizate(parent, email, password):
 def reset_password(parent, email):
     parent.find_element_by_css_selector(_locators.input_remind_password).send_keys(email)
     parent.find_element_by_xpath(_locators.button_reset_password).click()
+
+def click_add_to_cart(parent):
+    parent.find_element_by_xpath(_locators.button_add_to_cart).click()
+
+def view_cart(parent):
+    parent.find_element_by_css_selector(_locators.button_view_cart).click()

@@ -1,5 +1,6 @@
 from selenium import webdriver
 import locators as _locators
+import utils
 
 
 def add_product_to_cart():
@@ -16,27 +17,27 @@ def add_product_to_cart():
         browser = webdriver.Chrome()
         browser.get(_locators.main_page_link)
 
-        browser.find_element_by_xpath(_locators.catalog_link).click()
+        utils.find_xpath(browser, _locators.catalog_link).click()
 
-        page_catalog_detector = browser.find_element_by_css_selector(catalog_heading_locator).text
+        page_catalog_detector = utils.find(browser, catalog_heading_locator).text
         assert catalog_heading in page_catalog_detector, \
             "Search heading '%s' should contain text '%s'" % (page_catalog_detector, catalog_heading)
 
         # Steps
-        browser.find_element_by_xpath(_locators.button_add_to_cart).click()
+        utils.click_add_to_cart(browser)
 
-        success_add_message = browser.find_element_by_css_selector(success_add_message_locator).text
+        success_add_message = utils.find(browser, success_add_message_locator).text
         assert success_message in success_add_message, \
             "Search heading '%s' should contain text '%s'" % (success_add_message, success_message)
 
-        what_is_in_cart = browser.find_element_by_css_selector(item_in_cart_locator).text
+        what_is_in_cart = utils.find(browser, item_in_cart_locator).text
 
-        browser.find_element_by_css_selector(_locators.button_view_cart).click()
+        utils.view_cart(browser)
 
-        cart = browser.find_element_by_css_selector(item_in_cart_name).text
+        cart = utils.find(browser, item_in_cart_name).text
 
         # Assert
-        assert what_is_in_cart == cart
+        assert what_is_in_cart == cart, "Wrong item in the cart"
 
     finally:
         browser.quit()
