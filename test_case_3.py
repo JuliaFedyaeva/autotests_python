@@ -11,8 +11,6 @@ def authorization():
     # Data
     auth_heading = 'Войти'
     page_auth_locator = 'form#login_form h2'
-    success_message = 'Рады видеть вас снова'
-    success_message_locator = '//div[contains(text(), "Рады видеть вас снова")]'
 
     try:
         # Arrange
@@ -29,13 +27,13 @@ def authorization():
         utils.authorizate(browser, test_data.email, test_data.password)
 
         WebDriverWait(browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, success_message_locator))
+            EC.presence_of_element_located((By.XPATH, _locators.success_message_locator))
         )
 
         # Assert
-        success_message_text = utils.find_xpath(browser, success_message_locator).text
-        assert success_message in success_message_text, \
-            "Search success message '%s' should contain text '%s'" % (success_message_text, success_message)
+        success_message_text = utils.find_xpath(browser, _locators.success_message_locator).text
+        assert _locators.success_message in success_message_text, \
+            "Search success message '%s' should contain text '%s'" % (success_message_text, _locators.success_message)
 
     finally:
         browser.quit()

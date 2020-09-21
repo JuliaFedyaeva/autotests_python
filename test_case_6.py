@@ -1,65 +1,92 @@
 from selenium import webdriver
-from selenium.webdriver.support.ui import Select
 import locators as _locators
-import test_case_3
-import test_case_5
+import utils
+import test_data
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def payment_without_card():
     # Data
-    name = 'Max'
-    lastname = 'Payne'
-    address = 'PlayStation'
-    city = 'Nowhere'
-    postcode = '652877'
-    page_shipping_heading = 'Адрес доставки'
     heading_shipping_locator = 'div.sub-header h1'
     country_locator = 'select#id_country'
-    russia = 'RU'
     heading_payment_locator = 'div.sub-header h1'
     page_payment_heading = 'Введите параметры платежа'
+    page_shipping_heading = 'Адрес доставки'
 
     try:
         # Arrange
         browser = webdriver.Chrome()
         browser.get(_locators.main_page_link)
 
-        test_case_3.authorization()
-        test_case_5.add_product_to_cart()
+        utils.find(browser, _locators.login_link).click()
+        utils.authorizate(browser, test_data.email, test_data.password)
+
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.XPATH, _locators.success_message_locator))
+        )
+
+        success_message_text = utils.find_xpath(browser, _locators.success_message_locator).text
+        assert _locators.success_message in success_message_text, \
+            "Search success message '%s' should contain text '%s'" % (success_message_text, _locators.success_message)
+
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, _locators.catalog_link))
+        )
+
+        utils.find(browser, _locators.catalog_link).click()
+
+        page_catalog_detector = utils.find(browser, _locators.catalog_heading_locator).text
+        assert _locators.catalog_heading in page_catalog_detector, \
+            "Search heading '%s' should contain text '%s'" % (page_catalog_detector, _locators.catalog_heading)
+
+        utils.click_add_to_cart(browser)
+
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, _locators.button_view_cart))
+        )
+
+        utils.view_cart(browser)
 
         # Steps
-        browser.find_element_by_css_selector(_locators.button_to_order).click()
+        utils.find(browser, _locators.button_to_order).click()
 
-        page_shipping_detector = browser.find_element_by_css_selector(heading_shipping_locator).text
+        page_shipping_detector = utils.find(browser, heading_shipping_locator).text
         assert page_shipping_heading in page_shipping_detector, \
             "Search heading '%s' should contain text '%s'" % (page_shipping_detector, heading_shipping_locator)
 
-        browser.find_element_by_css_selector(_locators.input_name).send_keys(name)
-        browser.find_element_by_css_selector(_locators.input_lastname).send_keys(lastname)
-        browser.find_element_by_css_selector(_locators.input_address).send_keys(address)
-        browser.find_element_by_css_selector(_locators.input_city).send_keys(city)
-        browser.find_element_by_css_selector(_locators.input_postcode).send_keys(postcode)
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, heading_shipping_locator))
+        )
 
-        select = Select(browser.find_element_by_id(country_locator))
-        select.select_by_value(russia)
-
-        button_to_next_step = browser.find_element_by_css_selector(_locators.link_to_payment).click()
+        utils.set_address(browser, test_data.name, test_data.lastname, test_data.address, test_data.city, test_data.postcode, country_locator, test_data.country)
+        utils.click_next_step_order(browser)
 
         # тут по идее должна быть проверка способа доставки, но нет такого раздела почему-то,
         # сразу перекидывает на шаг оплаты
 
-        page_payment_detector = browser.find_element_by_css_selector(heading_payment_locator).text
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, heading_payment_locator))
+        )
+
+        page_payment_detector = utils.find(browser, heading_payment_locator).text
         assert page_payment_heading in page_payment_detector
 
         # здесь поля оплаты остаются пустыми
 
+        WebDriverWait(browser, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, _locators.link_to_payment))
+        )
+
         # Assert
-        button_disabled = button_to_next_step.getAttribute('disabled')
+        button_disabled = _locators.link_to_payment.getAttribute('disabled')
         assert button_disabled == "true", "No disabled button on payment page"
 
-        button_to_next_step.click()
+        button_disabled.click()
 
     finally:
         browser.quit()
 
-    return payment_without_card()
+
+payment_without_card()

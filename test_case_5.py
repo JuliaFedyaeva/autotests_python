@@ -5,8 +5,6 @@ import utils
 
 def add_product_to_cart():
     # Data
-    catalog_heading = 'Все товары'
-    catalog_heading_locator = 'div.page-header.action h1'
     success_add_message_locator = 'div.alertinner'
     success_message = 'был добавлен в вашу корзину'
     item_in_cart_locator = 'div.alertinner strong'
@@ -19,9 +17,9 @@ def add_product_to_cart():
 
         utils.find_xpath(browser, _locators.catalog_link).click()
 
-        page_catalog_detector = utils.find(browser, catalog_heading_locator).text
-        assert catalog_heading in page_catalog_detector, \
-            "Search heading '%s' should contain text '%s'" % (page_catalog_detector, catalog_heading)
+        page_catalog_detector = utils.find(browser, _locators.catalog_heading_locator).text
+        assert _locators.catalog_heading in page_catalog_detector, \
+            "Search heading '%s' should contain text '%s'" % (page_catalog_detector, _locators.catalog_heading)
 
         # Steps
         utils.click_add_to_cart(browser)

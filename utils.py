@@ -1,4 +1,6 @@
 import locators as _locators
+from selenium.webdriver.support.ui import Select
+
 
 def find(parent, locator):
     return parent.find_element_by_css_selector(locator)
@@ -30,3 +32,15 @@ def click_add_to_cart(parent):
 
 def view_cart(parent):
     parent.find_element_by_css_selector(_locators.button_view_cart).click()
+
+def set_address(parent, name, lastname, address, city, postcode, country_locator, country):
+    parent.find_element_by_css_selector(_locators.input_name).send_keys(name)
+    parent.find_element_by_css_selector(_locators.input_lastname).send_keys(lastname)
+    parent.find_element_by_css_selector(_locators.input_address).send_keys(address)
+    parent.find_element_by_css_selector(_locators.input_city).send_keys(city)
+    parent.find_element_by_css_selector(_locators.input_postcode).send_keys(postcode)
+    select = Select(parent.find_element_by_css_selector(country_locator))
+    select.select_by_value(country)
+
+def click_next_step_order(parent):
+    parent.find_element_by_xpath(_locators.button_to_continue).click()
