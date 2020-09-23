@@ -15,7 +15,7 @@ def add_product_to_cart():
         browser = webdriver.Chrome()
         browser.get(_locators.main_page_link)
 
-        utils.find_xpath(browser, _locators.catalog_link).click()
+        utils.find(browser, _locators.catalog_link).click()
 
         page_catalog_detector = utils.find(browser, _locators.catalog_heading_locator).text
         assert _locators.catalog_heading in page_catalog_detector, \
