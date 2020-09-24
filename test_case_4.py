@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-def password_remind():
+def test_password_remind():
     # Data
     auth_heading = 'Войти'
     page_auth_locator = 'form#login_form h2'
@@ -46,6 +46,3 @@ def password_remind():
 
     finally:
         browser.quit()
-
-
-password_remind()

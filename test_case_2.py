@@ -7,7 +7,7 @@ import test_data
 import utils
 
 
-def search_item():
+def test_search_item():
     # Data
     book_locator = 'a[title="Google Hacking"]'
 
@@ -30,6 +30,3 @@ def search_item():
 
     finally:
         browser.quit()
-
-
-search_item()

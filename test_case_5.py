@@ -3,7 +3,7 @@ import locators as _locators
 import utils
 
 
-def add_product_to_cart():
+def test_add_product_to_cart():
     # Data
     success_add_message_locator = 'div.alertinner'
     success_message = 'был добавлен в вашу корзину'
@@ -39,6 +39,3 @@ def add_product_to_cart():
 
     finally:
         browser.quit()
-
-
-add_product_to_cart()

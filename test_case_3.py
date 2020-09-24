@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def authorization():
+def test_authorization():
     # Data
     auth_heading = 'Войти'
     page_auth_locator = 'form#login_form h2'
@@ -37,6 +37,3 @@ def authorization():
 
     finally:
         browser.quit()
-
-
-authorization()

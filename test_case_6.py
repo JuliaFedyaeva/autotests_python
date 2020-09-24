@@ -7,7 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def payment_without_card():
+def test_payment_without_card():
     # Data
     heading_shipping_locator = 'div.sub-header h1'
     country_locator = 'select#id_country'
@@ -87,6 +87,3 @@ def payment_without_card():
 
     finally:
         browser.quit()
-
-
-payment_without_card()
