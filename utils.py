@@ -28,7 +28,7 @@ def reset_password(parent, email):
     parent.find_element_by_xpath(_locators.button_reset_password).click()
 
 def click_add_to_cart(parent):
-    parent.find_element_by_xpath(_locators.button_add_to_cart).click()
+    parent.find_element_by_css_selector(_locators.add_to_cart_from_catalog).click()
 
 def view_cart(parent):
     parent.find_element_by_css_selector(_locators.button_view_cart).click()
