@@ -1,4 +1,5 @@
 import locators as _locators
+import pytest
 import utils
 import test_data
 from selenium.webdriver.common.by import By
@@ -6,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+@pytest.mark.xfail
 def test_payment_without_card(browser):
     # Data
     heading_shipping_locator = 'div.sub-header h1'
